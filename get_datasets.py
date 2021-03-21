@@ -28,8 +28,11 @@ class get_dataset:
             dir = './'
 
             # Signature: dataset_download_file(dataset, file_name, path=None, force=False, quiet=True)
-            os.remove(filename)
-            api.dataset_download_file(p, f)
+            if path.exists(filename):
+                os.remove(filename)
+                api.dataset_download_file(p, f)
+            else:
+                api.dataset_download_file(p, f)
 
         else:
             return None
