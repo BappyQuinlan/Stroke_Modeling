@@ -4,11 +4,6 @@ import pandas as pd
 import get_datasets as gd
 import numpy as np
 
-pd.set_option('display.width', None)
-pd.set_option('display.max_colwidth', None)
-pd.set_option('display.max_columns', None)
-pd.set_option('display.max_rows', None)
-
 filename = 'healthcare-dataset-stroke-data.csv'
 location = 'fedesoriano/stroke-prediction-dataset'
 
@@ -49,14 +44,15 @@ def replace_married(data3):
 
 
 def pie_charts(labels, axis):
-    fig1, ax1 = plt.subplots()
+    fig1, ax1 = plt.subplots(figsize=[10, 8])
     ax1.pie(axis, labels=labels, autopct='%1.1f%%',
             shadow=True, startangle=90)
+    ax1.legend()
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
     return
 
 
-fig1 = heatmap_of_missing_values(df)
+heatmap_of_missing_values(df)
 
 x = clean_nulls(df)
 y = copy_data_set(x)
@@ -73,11 +69,12 @@ m5 = (z.stroke == 0).sum()
 labels = 'Male', 'Female', 'Other'
 size = [m1,m2, m3]
 
-pie_chart1 = pie_charts(labels, size)
-
+pie_charts(labels, size)
 
 labels2 = 'Stroke', 'No Stroke'
 size2 = [m4, m5]
+
+pie_charts(labels2, size2)
 
 list_of_tuples = list(zip(df.query('gender=="Female"').age, df.query('gender=="Male"').age))
 list_of_tuples
@@ -95,7 +92,12 @@ plt.legend()
 plt.xlabel('Ages')
 plt.ylabel('Count')
 
-#pie_chart2 = pie_charts(pd.DataFrame)
+labels3 = z.smoking_status.unique()
+m10 = pd.DataFrame(z['smoking_status'])
+m11 = pd.get_dummies(m10)
+size4 = m11.sum()
+
+pie_charts(labels3, size4)
 
 
 plt.show()
