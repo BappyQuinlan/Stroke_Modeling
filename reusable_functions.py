@@ -8,6 +8,7 @@ import seaborn as sns
 
 class resusable:
 
+    #Generate Heatmap
     def heatmap_of_missing_values(data):
         plt.title('Missing Value Status', fontweight='bold')
         ax = sns.heatmap(data.isna().sum().to_frame(), annot=True, fmt='d', cmap='vlag')
@@ -34,6 +35,7 @@ class resusable:
         data3['ever_married'] = data3['ever_married'].replace({'Yes': 1, 'No': 0})
         return data3
 
+    # Generate Pie Charts
     def pie_charts(labels, axis):
         fig1, ax1 = plt.subplots(figsize=[10, 8])
         ax1.pie(axis, labels=labels, autopct='%1.1f%%',
