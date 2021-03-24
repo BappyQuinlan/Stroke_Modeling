@@ -1,3 +1,8 @@
+# Reusable Functions
+# Author : Barry Quinlan
+# Date : 24th March 2021
+# Email : bappyquinlan@gmail.com
+
 import matplotlib.pyplot as plt
 import seaborn as sns
 

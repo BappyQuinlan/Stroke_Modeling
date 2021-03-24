@@ -1,3 +1,9 @@
+# Api and Get Dataset
+# Author : Barry Quinlan
+# Date : 24th March 2021
+# Email : bappyquinlan@gmail.com
+
+
 from kaggle.api.kaggle_api_extended import KaggleApi
 import os
 from os import path
