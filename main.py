@@ -1,7 +1,13 @@
+# Main Execution File
+# Author : Barry Quinlan
+# Date : 24th March 2021
+# Email : bappyquinlan@gmail.com
+
+
 import matplotlib.pyplot as plt
-import seaborn as sns
 import pandas as pd
 import get_datasets as gd
+from reusable_functions import resusable as rf
 import numpy as np
 
 filename = 'healthcare-dataset-stroke-data.csv'
@@ -13,50 +19,11 @@ gd.get_dataset(filename, location)
 df = pd.read_csv(filename, index_col=0)
 
 
-def heatmap_of_missing_values(data):
-    plt.title('Missing Value Status', fontweight='bold')
-    ax = sns.heatmap(data.isna().sum().to_frame(), annot=True, fmt='d', cmap='vlag')
-    ax.set_xlabel('Amount Missing')
-    return
+rf.heatmap_of_missing_values(df)
 
-
-# Function to check for nulls and replace with 0
-def clean_nulls(data):
-    bool_series = data.isnull().sum()
-    x = bool_series[bool_series > 0]
-    if len(x) > 0:
-        data.fillna(0, inplace=True)
-        return data
-    else:
-        return
-
-
-# creating a copy of original dataset for treating missing values
-def copy_data_set(data2):
-    st_copy = data2.copy(deep=True)
-    return st_copy
-
-
-# Replace Married Values with numeric
-def replace_married(data3):
-    data3['ever_married'] = data3['ever_married'].replace({'Yes': 1, 'No': 0})
-    return data3
-
-
-def pie_charts(labels, axis):
-    fig1, ax1 = plt.subplots(figsize=[10, 8])
-    ax1.pie(axis, labels=labels, autopct='%1.1f%%',
-            shadow=True, startangle=90)
-    ax1.legend()
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    return
-
-
-heatmap_of_missing_values(df)
-
-x = clean_nulls(df)
-y = copy_data_set(x)
-z = replace_married(y)
+x = rf.clean_nulls(df)
+y = rf.copy_data_set(x)
+z = rf.replace_married(y)
 
 m1 = (z.gender == 'Male').sum()
 m2 = (z.gender == 'Female').sum()
@@ -69,12 +36,12 @@ m5 = (z.stroke == 0).sum()
 labels = 'Male', 'Female', 'Other'
 size = [m1,m2, m3]
 
-pie_charts(labels, size)
+rf.pie_charts(labels, size)
 
 labels2 = 'Stroke', 'No Stroke'
 size2 = [m4, m5]
 
-pie_charts(labels2, size2)
+rf.pie_charts(labels2, size2)
 
 list_of_tuples = list(zip(df.query('gender=="Female"').age, df.query('gender=="Male"').age))
 list_of_tuples
@@ -97,7 +64,7 @@ m10 = pd.DataFrame(z['smoking_status'])
 m11 = pd.get_dummies(m10)
 size4 = m11.sum()
 
-pie_charts(labels3, size4)
+rf.pie_charts(labels3, size4)
 
 
 plt.show()
